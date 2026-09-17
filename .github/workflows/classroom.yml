@@ -27,8 +27,7 @@ jobs:
         run: dotnet build src/Lab1/Lab1/Lab1.csproj -c Release --no-restore
 
       - name: Unit tests
-        working-directory: /src/src/
-        run: dotnet test src/Lab1/Test/Test.csproj -c Release --no-build
+        run: dotnet test src/Lab1/Test/Test.csproj -c Release
         
       - uses: JorgeLNJunior/render-deploy@v1.5.0
         with:
