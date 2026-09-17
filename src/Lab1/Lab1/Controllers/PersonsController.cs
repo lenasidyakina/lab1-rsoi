@@ -13,8 +13,7 @@ public class PersonsController : ControllerBase
     private readonly IPersonService _service;
 
     public PersonsController(IPersonService service) => _service = service;
-
-
+    
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<PersonResponse>>> ListPersons(CancellationToken ct)
@@ -43,8 +42,7 @@ public class PersonsController : ControllerBase
         var created = await _service.CreateAsync(request, ct);
         return CreatedAtAction(nameof(GetPerson), new { id = created.Id }, null);
     }
-
-
+    
     [HttpPatch("{id:int}")]
     [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
