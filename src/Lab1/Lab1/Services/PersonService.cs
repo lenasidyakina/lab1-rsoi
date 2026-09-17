@@ -51,15 +51,15 @@ public class PersonService : IPersonService
         if (person is null) return null;
 
         person.Name = request.Name.Trim();
-        person.Age = request.Age;
-        person.Address = request.Address;
-        person.Work = request.Work;
+        if (request.Age     is not null) person.Age     = request.Age;
+        if (request.Address is not null) person.Address = request.Address;
+        if (request.Work    is not null) person.Work    = request.Work;
 
         await _db.SaveChangesAsync(ct);
 
         return ToResponse(person);
     }
-
+    
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
     {
         var person = await _db.Persons.FirstOrDefaultAsync(p => p.Id == id, ct);
@@ -69,13 +69,13 @@ public class PersonService : IPersonService
         await _db.SaveChangesAsync(ct);
         return true;
     }
-
+    
     private static PersonResponse ToResponse(Person p) => new()
     {
-        Id = p.Id,
-        Name = p.Name,
-        Age = p.Age,
+        Id      = p.Id,
+        Name    = p.Name,
+        Age     = p.Age,
         Address = p.Address,
-        Work = p.Work
+        Work    = p.Work,
     };
 }

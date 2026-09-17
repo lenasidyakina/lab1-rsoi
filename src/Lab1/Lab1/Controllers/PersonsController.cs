@@ -14,7 +14,7 @@ public class PersonsController : ControllerBase
 
     public PersonsController(IPersonService service) => _service = service;
 
-    /// <summary>Get all Persons</summary>
+
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<PersonResponse>>> ListPersons(CancellationToken ct)
@@ -22,8 +22,7 @@ public class PersonsController : ControllerBase
         var result = await _service.GetAllAsync(ct);
         return Ok(result);
     }
-
-    /// <summary>Get Person by ID</summary>
+    
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
@@ -35,8 +34,7 @@ public class PersonsController : ControllerBase
 
         return Ok(person);
     }
-
-    /// <summary>Create new Person</summary>
+    
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
@@ -46,7 +44,7 @@ public class PersonsController : ControllerBase
         return CreatedAtAction(nameof(GetPerson), new { id = created.Id }, null);
     }
 
-    /// <summary>Update Person by ID</summary>
+
     [HttpPatch("{id:int}")]
     [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
@@ -60,7 +58,7 @@ public class PersonsController : ControllerBase
         return Ok(updated);
     }
 
-    /// <summary>Remove Person by ID</summary>
+
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
