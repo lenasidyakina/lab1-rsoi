@@ -10,8 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
-var rawConn = Environment.GetEnvironmentVariable("DATABASE_URL")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection")!;
+var rawConn = builder.Configuration.GetConnectionString("DefaultConnection")!;
 var connString = NormalizePostgresUrl(rawConn);
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(connString));
