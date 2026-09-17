@@ -15,7 +15,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      # TODO build, test and deploy project
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore src/Lab1/Lab1/Lab1.csproj
+
+      - name: Build
+        run: dotnet build src/Lab1/Lab1/Lab1.csproj -c Release --no-restore
+
+      - name: Unit tests
+        run: dotnet test src/Lab1/Test/Test.csproj -c Release
+        
+      - uses: JorgeLNJunior/render-deploy@v1.5.0
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          wait_deploy: true
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
