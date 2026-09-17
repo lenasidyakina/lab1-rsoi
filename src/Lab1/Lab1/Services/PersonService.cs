@@ -51,9 +51,9 @@ public class PersonService : IPersonService
         if (person is null) return null;
 
         person.Name = request.Name.Trim();
-        person.Age = request.Age;
-        person.Address = request.Address;
-        person.Work = request.Work;
+        if (request.Age     is not null) person.Age     = request.Age;
+        if (request.Address is not null) person.Address = request.Address;
+        if (request.Work    is not null) person.Work    = request.Work;
 
         await _db.SaveChangesAsync(ct);
 
